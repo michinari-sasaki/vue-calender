@@ -1,0 +1,186 @@
+@mixin sp {
+  @media screen and(max-width:480px) {
+    @content;
+  }
+}
+@mixin pc {
+  @media screen and(min-width:1023px) {
+    @content;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+//color
+$white: #fff;
+$mint: #42b984;
+$l-mint: #e2f5ed;
+$gray: #ccc;
+$l-gray: #f7f7f7;
+$black: #273849;
+$sumi: #475050;
+
+html {
+  font-size: 62.5%;
+  font-family: "Yu Gothic", "游ゴシック", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
+  color: $black;
+}
+body {
+  line-height: 1.4;
+  background: #f5f5f5;
+}
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.inner {
+  padding: 24px;
+}
+
+// header
+.header {
+  background: $mint;
+  &__inner {
+    text-align: center;
+    color: $white;
+  }
+  &__title {
+    font-size: 3.2rem;
+    font-weight: bold;
+  }
+  &__lead {
+    font-size: 1.4rem;
+    margin-top: 8px;
+  }
+}
+//main
+.main {
+  background: $l-mint;
+}
+// setting
+.setting {
+  &__heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  dl {
+    width: 100%;
+    dt {
+      padding: 8px;
+      text-align: center;
+      color: $mint;
+      background: $white;
+    }
+    dd {
+      padding: 16px 24px;
+      table {
+        width: 100%;
+        td,
+        th {
+          padding: 8px;
+        }
+        thead {
+          th {
+            text-align: center;
+          }
+        }
+        th {
+          font-size: 1.8rem;
+          font-weight: bold;
+          color: $mint;
+        }
+        td {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}
+
+.calender {
+  &__heading {
+    color: $mint;
+    font-weight: bold;
+    font-size: 4rem;
+    text-align: center;
+  }
+  &__list {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: wrap;
+    background: $mint;
+    margin: 16px 0 40px;
+    padding: 1px;
+    p {
+      width: 14.28%;
+      span {
+        display: flex;
+        height: 100px;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.4rem;
+        background: #fff;
+        color: #aaa;
+        margin: 1px;
+        &.today {
+          color: $mint;
+          font-weight: bold;
+          font-size: 4rem;
+        }
+      }
+      &.week {
+        span {
+          color: $mint;
+          font-weight: bold;
+          font-size: 4rem;
+        }
+      }
+      // //毎週月曜日
+      // &:nth-of-type(7n + 9) {
+      //   span {
+      //     background: #fee6e6;
+      //   }
+      // }
+      // //毎週木曜日
+      // &:nth-of-type(7n + 12) {
+      //   span {
+      //     background: #fee6e6;
+      //   }
+      // }
+      // //2回目、4回目の水曜日
+      // &:nth-of-type(14n + 18) {
+      //   span {
+      //     background: #e3fce4;
+      //   }
+      // }
+      // //1回目、3回目の水曜日
+      // &:nth-of-type(-14n + 24) {
+      //   span {
+      //     background: #e3eefc;
+      //   }
+      // }
+      // //1回目の金曜日
+      // &:nth-of-type(-14n + 13) {
+      //   span {
+      //     background: #ddd;
+      //   }
+      // }
+      // //2回目の土曜日
+      // &:nth-of-type(-14n + 14) {
+      //   span {
+      //     background: #333;
+      //   }
+      // }
+    }
+  }
+}
+
+.footer {
+  font-size: 1.2rem;
+  padding: 16px 0;
+  background: #318760;
+  text-align: center;
+  color: $white;
+}
