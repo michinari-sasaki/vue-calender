@@ -45,134 +45,65 @@ body {
   &__inner {
     text-align: center;
     color: $white;
+    padding: 8px;
   }
   &__title {
-    font-size: 3.2rem;
+    font-size: 2rem;
     font-weight: bold;
-  }
-  &__lead {
-    font-size: 1.4rem;
-    margin-top: 8px;
   }
 }
 //main
 .main {
   background: $l-mint;
 }
-// setting
-.setting {
-  &__heading {
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-  dl {
-    width: 100%;
-    dt {
-      padding: 8px;
-      text-align: center;
-      color: $mint;
-      background: $white;
-    }
-    dd {
-      padding: 16px 24px;
-      table {
-        width: 100%;
-        td,
-        th {
-          padding: 8px;
-        }
-        thead {
-          th {
-            text-align: center;
-          }
-        }
-        th {
-          font-size: 1.8rem;
-          font-weight: bold;
-          color: $mint;
-        }
-        td {
-          font-size: 1.6rem;
-        }
-      }
-    }
-  }
-}
-
 .calender {
   &__heading {
     color: $mint;
     font-weight: bold;
-    font-size: 4rem;
-    text-align: center;
+    font-size: 2rem;
   }
   &__list {
-    display: flex;
-    justify-content: space-evenly;
-    flex-flow: wrap;
-    background: $mint;
-    margin: 16px 0 40px;
-    padding: 1px;
-    p {
-      width: 14.28%;
-      span {
-        display: flex;
-        height: 100px;
-        justify-content: center;
-        align-items: center;
-        font-size: 2.4rem;
-        background: #fff;
+    background: $white;
+    li {
+      display: flex;
+      justify-content: flex-start;
+      border-bottom: 1px solid $mint;
+      padding: 8px;
+      &.burn {
+        background: #fee6e6;
+      }
+      &.nonBurn {
+        background: #e3eefc;
+      }
+      &.resource {
+        background: #e3fce4;
+      }
+    }
+    &__date {
+      font-size: 1.6rem;
+      width: 10%;
+      &.today {
+        color: $mint;
+      }
+    }
+    &__day {
+      width: 10%;
+      font-size: 1.6rem;
+      &.holiday {
         color: #aaa;
-        margin: 1px;
-        &.today {
-          color: $mint;
-          font-weight: bold;
-          font-size: 4rem;
-        }
       }
-      &.week {
-        span {
-          color: $mint;
-          font-weight: bold;
-          font-size: 4rem;
-        }
+      &.burn {
+        color: red;
       }
-      // //毎週月曜日
-      // &:nth-of-type(7n + 9) {
-      //   span {
-      //     background: #fee6e6;
-      //   }
-      // }
-      // //毎週木曜日
-      // &:nth-of-type(7n + 12) {
-      //   span {
-      //     background: #fee6e6;
-      //   }
-      // }
-      // //2回目、4回目の水曜日
-      // &:nth-of-type(14n + 18) {
-      //   span {
-      //     background: #e3fce4;
-      //   }
-      // }
-      // //1回目、3回目の水曜日
-      // &:nth-of-type(-14n + 24) {
-      //   span {
-      //     background: #e3eefc;
-      //   }
-      // }
-      // //1回目の金曜日
-      // &:nth-of-type(-14n + 13) {
-      //   span {
-      //     background: #ddd;
-      //   }
-      // }
-      // //2回目の土曜日
-      // &:nth-of-type(-14n + 14) {
-      //   span {
-      //     background: #333;
-      //   }
-      // }
+    }
+    &__detail {
+      font-size: 1.6rem;
+      &.holiday {
+        color: #aaa;
+      }
+      &.burn {
+        color: red;
+      }
     }
   }
 }

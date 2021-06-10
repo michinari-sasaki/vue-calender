@@ -13,181 +13,163 @@
     <div id="app">
       <header class="header">
         <div class="inner header__inner">
-          <h1 class="header__title">あなたの街のゴミ出しカレンダー</h1>
-          <p class="header__lead">忘れがちなゴミの日備忘カレンダーです。</p>
+          <h1 class="header__title">ゴミの日アプリ</h1>
         </div>
       </header>
       <div class="main">
-        <section class="setting">
-          <dl>
-            <dt><h2 class="setting__heading">ゴミの日の設定</h2></dt>
-            <dd>
-              <table>
-                <thead>
-                  <tr>
-                    <th>&nbsp;</th>
-                    <th>回数</th>
-                    <th>曜日</th>
-                    <th>確認</th>
-                    <th>&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>燃えるゴミの日</th>
-                    <td>
-                      <select v-model="selected">
-                        <option>毎週</option>
-                        <option>毎月1回目</option>
-                        <option>毎月1回目・2回目</option>
-                        <option>毎月1回目・3回目</option>
-                        <option>毎月1回目・4回目</option>
-                        <option>毎月2回目</option>
-                        <option>毎月2回目・3回目</option>
-                        <option>毎月2回目・4回目</option>
-                        <option>毎月3回目</option>
-                        <option>毎月3回目・4回目</option>
-                        <option>毎月4回目</option>
-                      </select>
-                    </td>
-                    <td>
-                      <label for="weed-1">月</label>
-                      <input type="checkbox" value="月" id="weed-1" v-model="weeks" />
-                      <label for="weed-2">火</label>
-                      <input type="checkbox" value="火" id="weed-2" v-model="weeks" />
-                      <label for="weed-3">水</label>
-                      <input type="checkbox" value="水" id="weed-3" v-model="weeks" />
-                      <label for="weed-4">木</label>
-                      <input type="checkbox" value="木" id="weed-4" v-model="weeks" />
-                      <label for="weed-5">金</label>
-                      <input type="checkbox" value="金" id="weed-5" v-model="weeks" />
-                      <label for="weed-6">土</label>
-                      <input type="checkbox" value="土" id="weed-6" v-model="weeks" />
-                      <label for="weed-7">日</label>
-                      <input type="checkbox" value="日" id="weed-7" v-model="weeks" />
-                    </td>
-                    <td>
-                      <button>{{selected}}{{week}}保存</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>燃えないゴミの日</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>資源ゴミの日</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </dd>
-          </dl>
-        </section>
         <section class="calender">
-          <!-- <div class="inner">
+          <div class="inner">
             <h2 class="calender__heading">{{thisMonth}}月</h2>
-            <div class="calender__list">
-              <p v-for="item in this.dayArray" class="week"><span>{{item}}</span></p>
-              <p v-for="item in this.startDate"><span>&nbsp;</span></p>
-              <p v-for="(item,index) in this.lastDate" :key="index">
-                <span v-if="item == this.toDate" class="today">{{item}}</span>
-                <span v-else>{{item}}</span>
-              </p>
-              <p v-for="item in this.lastDay"><span>&nbsp;</span></p>
-            </div>
-          </div> -->
+            <br />
+            燃えるゴミの日は毎週：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="garbageDay(index+1,'burn')">{{item}}曜日</button>
+            </template>
+            <br />
+            燃えるゴミの日は隔週【1・3回目】：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="everyWeek(index+1,'even','burn')">{{item}}曜日</button>
+            </template>
+            <br />
+            燃えるゴミの日は隔週【2・4回目】：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="everyWeek(index+1,'odd','burn')">{{item}}曜日</button>
+            </template>
+            <br />
+            <br />
+            燃えないゴミの日は毎週：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="garbageDay(index+1,'nonBurn')">{{item}}曜日</button>
+            </template>
+            <br />
+            燃えないゴミの日は隔週【1・3回目】：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="everyWeek(index+1,'even','nonBurn')">{{item}}曜日</button>
+            </template>
+            <br />
+            燃えないゴミの日は隔週【2・4回目】：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="everyWeek(index+1,'odd','nonBurn')">{{item}}曜日</button>
+            </template>
+            <br />
+            <br />
+            資源ゴミの日は隔週【1・3回目】：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="everyWeek(index+1,'even','resource')">{{item}}曜日</button>
+            </template>
+            <br />
+            資源ゴミの日は隔週【2・4回目】：
+            <template v-for="item,index in this.weekdaysArray" :key="index">
+              <button v-on:click="everyWeek(index+1,'odd','resource')">{{item}}曜日</button>
+            </template>
+            <br />
+            <br />
+            <ul class="calender__list">
+              <li v-for="(item,index) in this.allDays" :key="index" v-bind:class="item.detail">
+                <div class="calender__list__date" v-bind:class="{today:item.today}">{{item.date}}</div>
+                <div v-if="item.day==0|item.day==6" class="calender__list__day holiday">{{this.dayArray[item.day]}}</div>
+                <div v-else-if="item.day == this.selected" class="calender__list__day burn">{{this.dayArray[item.day]}}</div>
+                <div v-else class="calender__list__day">{{this.dayArray[item.day]}}</div>
+                <div class="calender__list__detail">
+                  <template v-if="item.detail=='burn'">燃えるゴミの日</template>
+                  <template v-else-if="item.detail=='nonBurn'">燃えないゴミの日</template>
+                  <template v-if="item.detail=='resource'">資源ゴミの日</template>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div id="result"></div>
         </section>
       </div>
-      <footer class="footer">2024年ゴミの日</footer>
+      <footer class="footer">ゴミの日アプリ</footer>
     </div>
     <script>
       Vue.createApp({
         data: function () {
           return {
-            selected: "",
-            weeks: [],
+            selected: null,
             startDate: null,
             thisMonth: null,
             toDate: null,
+            toDay: null,
             lastDate: null,
             lastDay: null,
             allDays: [],
-            sundays: [],
-            mondays: [],
-            tuesdays: [],
-            wednesdays: [],
-            thursdays: [],
-            fridays: [],
-            saturdays: [],
+            weekdaysArray: ["月", "火", "水", "木", "金", "土"],
             dayArray: ["日", "月", "火", "水", "木", "金", "土"],
           };
         },
         methods: {
-          getDays: function () {
-            const nowDate = new Date();
-            const year = nowDate.getFullYear();
-            const month = nowDate.getMonth() + 1;
-            const date = nowDate.getDate();
-            const day = this.dayArray[nowDate.getDay()];
-          },
           calender: function () {
             //現在の日付の取得
             const nowDate = new Date();
             const year = nowDate.getFullYear();
             const month = nowDate.getMonth() + 1;
             const date = nowDate.getDate();
-            const dayArray = ["日", "月", "火", "水", "木", "金", "土"];
-            const day = dayArray[nowDate.getDay()];
+            const day = this.dayArray[nowDate.getDay()];
             this.toDate = date;
             this.thisMonth = month;
-            console.log("日付は" + nowDate);
-            console.log(year + "年" + month + "月" + date + "日" + day + "曜日");
+            console.log("今日の日付：" + year + "年" + month + "月" + date + "日" + day + "曜日");
             //今月の月初の取得
             const startDate = new Date(year, month - 1, 1);
             this.startDate = startDate.getDay();
-            console.log("月初は" + startDate.getDay());
             //今月の月末の取得
             const lastDate = new Date(year, month, 0);
             this.lastDate = new Date(year, month, 0).getDate();
             this.lastDay = parseInt(lastDate.getDay(), 10);
             this.lastDay = parseInt(this.lastDay, 10);
             this.lastDay = 6 - this.lastDay;
-            console.log("月末は" + this.lastDate);
-            console.log("ひづけ" + year, month);
+            console.log("月末：" + this.lastDate);
+            //オブジェクトに情報を格納
             for (let i = 1; i <= this.lastDate; i++) {
               let oneDay = new Date(year, month - 1, i);
               oneDay = oneDay.getDay();
-              this.allDays.push({ date: i, day: oneDay });
-              //曜日ごとの日付を配列に格納
-              // if (oneDay.getDay() == 0) {
-              //   this.sundays.push(i);
-              // } else if (oneDay.getDay() == 1) {
-              //   this.mondays.push(i);
-              // } else if (oneDay.getDay() == 2) {
-              //   this.tuesdays.push(i);
-              // } else if (oneDay.getDay() == 3) {
-              //   this.wednesdays.push(i);
-              // } else if (oneDay.getDay() == 4) {
-              //   this.thursdays.push(i);
-              // } else if (oneDay.getDay() == 5) {
-              //   this.fridays.push(i);
-              // } else if (oneDay.getDay() == 6) {
-              //   this.saturdays.push(i);
-              // }
+              if (i == date) {
+                this.toDay = true;
+              } else {
+                this.toDay = false;
+              }
+              this.allDays.push({ date: i, day: oneDay, today: this.toDay, detail: null });
             }
-            console.log("hoge", this.allDays[0]);
+          },
+          //毎週のゴミの日指定
+          garbageDay: function (index, garbageType) {
+            for (let i = 0; i <= this.allDays.length - 1; i++) {
+              if (this.allDays[i].day == index) {
+                this.allDays[i].detail = garbageType;
+              }
+            }
+          },
+          //隔週指定
+          everyWeek: function (index, oddEven, garbageType) {
+            //引数で指定された曜日の日付をforで配列に格納する
+            let everyWeek = [];
+            for (let i = 0; i <= this.allDays.length - 1; i++) {
+              if (this.allDays[i].day == index) {
+                everyWeek.push(this.allDays[i].date);
+              }
+            }
+            //奇数日（1,3隔週）偶数日（2,4隔週）で配列から奇数or偶数番目を削除
+            if (oddEven == "odd") {
+              everyWeek.splice(0, 1);
+            }
+            everyWeek.splice(1, 1);
+            everyWeek.splice(2);
+            for (let i = 0; i <= this.allDays.length - 1; i++) {
+              if (everyWeek.indexOf(i) >= 0) {
+                this.allDays[i - 1].detail = garbageType;
+              }
+            }
+          },
+          init: function () {
+            localStorage.hoge = "ローカルストレージ！";
+            let val = localStorage.hoge;
+            document.querySelector("#result").innerHTML = val;
           },
         },
         mounted: function () {
           this.calender();
-          //this.shuffle();
-          //this.getDays();
+          this.init();
         },
       }).mount("#app");
     </script>
