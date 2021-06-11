@@ -19,8 +19,6 @@
       <div class="main">
         <section class="calender">
           <div class="inner">
-            <h2 class="calender__heading">{{thisMonth}}月</h2>
-            <br />
             燃えるゴミの日は毎週：
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="garbageDay(index+1,'burn')">{{item}}曜日</button>
@@ -64,12 +62,21 @@
             </template>
             <br />
             <br />
+            <button v-on:click="saveData()">保存</button>
+            <button v-on:click="clearData()">削除</button>
+            <h2 class="calender__heading">{{thisMonth}}月</h2>
             <ul class="calender__list">
+              <li v-for="item in this.dayArray" class="week">{{item}}</li>
+
+              <template v-for="item in this.allDays">
+                <li v-for="n in this.allDays[0].day">{{n}}回目</li>
+              </template>
+
               <li v-for="(item,index) in this.allDays" :key="index" v-bind:class="item.detail">
                 <div class="calender__list__date" v-bind:class="{today:item.today}">{{item.date}}</div>
-                <div v-if="item.day==0|item.day==6" class="calender__list__day holiday">{{this.dayArray[item.day]}}</div>
+                <!-- <div v-if="item.day==0|item.day==6" class="calender__list__day holiday">{{this.dayArray[item.day]}}</div>
                 <div v-else-if="item.day == this.selected" class="calender__list__day burn">{{this.dayArray[item.day]}}</div>
-                <div v-else class="calender__list__day">{{this.dayArray[item.day]}}</div>
+                <div v-else class="calender__list__day">{{this.dayArray[item.day]}}</div> -->
                 <div class="calender__list__detail">
                   <template v-if="item.detail=='burn'">燃えるゴミの日</template>
                   <template v-else-if="item.detail=='nonBurn'">燃えないゴミの日</template>
@@ -95,6 +102,8 @@
             lastDate: null,
             lastDay: null,
             allDays: [],
+            hoge: [{ date: 1, day: 2, today: false, detail: null }],
+            testArray: ["猫", "犬"],
             weekdaysArray: ["月", "火", "水", "木", "金", "土"],
             dayArray: ["日", "月", "火", "水", "木", "金", "土"],
           };
@@ -161,15 +170,27 @@
               }
             }
           },
-          init: function () {
-            localStorage.hoge = "ローカルストレージ！";
-            let val = localStorage.hoge;
-            document.querySelector("#result").innerHTML = val;
+          saveData: function () {
+            console.log("hogeはっか");
+            const tmp = JSON.stringify(this.allDays);
+            localStorage.setItem("tmp", tmp);
+          },
+          clearData: function () {
+            localStorage.clear();
+          },
+          loadData: function () {
+            this.allDays = JSON.parse(localStorage.getItem("tmp"));
           },
         },
         mounted: function () {
-          this.calender();
-          this.init();
+          if (localStorage.hasOwnProperty("tmp")) {
+            console.log("ある。。だと。。");
+            this.allDays = JSON.parse(localStorage.getItem("tmp"));
+          } else {
+            console.log("ない。。だと。。");
+            this.calender();
+          }
+          //this.loadData();
         },
       }).mount("#app");
     </script>
