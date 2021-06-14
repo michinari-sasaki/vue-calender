@@ -19,44 +19,44 @@
       <div class="main">
         <section class="calender">
           <div class="inner">
-            燃えるゴミの日は毎週：
+            <h2 class="heading">燃えるゴミの日は毎週：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="garbageDay(index+1,'burn')">{{item}}曜日</button>
             </template>
             <br />
-            燃えるゴミの日は隔週【1・3回目】：
+            <h2 class="heading">燃えるゴミの日は隔週【1・3回目】：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="everyWeek(index+1,'even','burn')">{{item}}曜日</button>
             </template>
             <br />
-            燃えるゴミの日は隔週【2・4回目】：
+            <h2 class="heading">燃えるゴミの日は隔週【2・4回目】：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="everyWeek(index+1,'odd','burn')">{{item}}曜日</button>
             </template>
             <br />
             <br />
-            燃えないゴミの日は毎週：
+            <h2 class="heading">燃えないゴミの日は毎週：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="garbageDay(index+1,'nonBurn')">{{item}}曜日</button>
             </template>
             <br />
-            燃えないゴミの日は隔週【1・3回目】：
+            <h2 class="heading">燃えないゴミの日は隔週【1・3回目】：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="everyWeek(index+1,'even','nonBurn')">{{item}}曜日</button>
             </template>
             <br />
-            燃えないゴミの日は隔週【2・4回目】：
+            <h2 class="heading">燃えないゴミの日は隔週【2・4回目】：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="everyWeek(index+1,'odd','nonBurn')">{{item}}曜日</button>
             </template>
             <br />
             <br />
-            資源ゴミの日は隔週【1・3回目】：
+            <h2 class="heading">資源ゴミの日は隔週【1・3回目】：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="everyWeek(index+1,'even','resource')">{{item}}曜日</button>
             </template>
             <br />
-            資源ゴミの日は隔週【2・4回目】：
+            <h2 class="heading">資源ゴミの日は隔週【2・4回目】：</h2>
             <template v-for="item,index in this.weekdaysArray" :key="index">
               <button v-on:click="everyWeek(index+1,'odd','resource')">{{item}}曜日</button>
             </template>
@@ -64,23 +64,16 @@
             <br />
             <button v-on:click="saveData()">保存</button>
             <button v-on:click="clearData()">削除</button>
-            <h2 class="calender__heading">{{thisMonth}}月</h2>
+            <h2 class="calender__heading">{{currentMonth}}月</h2>
             <ul class="calender__list">
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
-
-              <template v-for="item in this.allDays">
-                <li v-for="n in this.allDays[0].day">{{n}}回目</li>
-              </template>
-
+              <li v-for="n in this.blankDays">&nbsp;</li>
               <li v-for="(item,index) in this.allDays" :key="index" v-bind:class="item.detail">
                 <div class="calender__list__date" v-bind:class="{today:item.today}">{{item.date}}</div>
-                <!-- <div v-if="item.day==0|item.day==6" class="calender__list__day holiday">{{this.dayArray[item.day]}}</div>
-                <div v-else-if="item.day == this.selected" class="calender__list__day burn">{{this.dayArray[item.day]}}</div>
-                <div v-else class="calender__list__day">{{this.dayArray[item.day]}}</div> -->
                 <div class="calender__list__detail">
-                  <template v-if="item.detail=='burn'">燃えるゴミの日</template>
-                  <template v-else-if="item.detail=='nonBurn'">燃えないゴミの日</template>
-                  <template v-if="item.detail=='resource'">資源ゴミの日</template>
+                  <template v-if="item.detail=='burn'">可燃ゴミ</template>
+                  <template v-else-if="item.detail=='nonBurn'">不燃ゴミ</template>
+                  <template v-if="item.detail=='resource'">資源ゴミ</template>
                 </div>
               </li>
             </ul>
@@ -96,14 +89,13 @@
           return {
             selected: null,
             startDate: null,
-            thisMonth: null,
+            currentMonth: null,
             toDate: null,
             toDay: null,
             lastDate: null,
             lastDay: null,
+            blankDays: null,
             allDays: [],
-            hoge: [{ date: 1, day: 2, today: false, detail: null }],
-            testArray: ["猫", "犬"],
             weekdaysArray: ["月", "火", "水", "木", "金", "土"],
             dayArray: ["日", "月", "火", "水", "木", "金", "土"],
           };
@@ -117,7 +109,7 @@
             const date = nowDate.getDate();
             const day = this.dayArray[nowDate.getDay()];
             this.toDate = date;
-            this.thisMonth = month;
+            this.currentMonth = month;
             console.log("今日の日付：" + year + "年" + month + "月" + date + "日" + day + "曜日");
             //今月の月初の取得
             const startDate = new Date(year, month - 1, 1);
@@ -138,8 +130,9 @@
               } else {
                 this.toDay = false;
               }
-              this.allDays.push({ date: i, day: oneDay, today: this.toDay, detail: null });
+              this.allDays.push({ month: month, date: i, day: oneDay, today: this.toDay, detail: null });
             }
+            this.blankDays = this.allDays[0].day;
           },
           //毎週のゴミの日指定
           garbageDay: function (index, garbageType) {
@@ -177,20 +170,18 @@
           },
           clearData: function () {
             localStorage.clear();
-          },
-          loadData: function () {
-            this.allDays = JSON.parse(localStorage.getItem("tmp"));
+            location.reload();
           },
         },
         mounted: function () {
+          //ローカルストレージにkey tmpがあれば
           if (localStorage.hasOwnProperty("tmp")) {
-            console.log("ある。。だと。。");
             this.allDays = JSON.parse(localStorage.getItem("tmp"));
+            this.blankDays = this.allDays[0].day;
+            this.currentMonth = this.allDays[0].month;
           } else {
-            console.log("ない。。だと。。");
             this.calender();
           }
-          //this.loadData();
         },
       }).mount("#app");
     </script>
