@@ -40,6 +40,9 @@ body {
 }
 .heading {
   font-size: 1.6rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 8px;
 }
 
 // header
@@ -60,6 +63,32 @@ body {
   background: $l-mint;
 }
 .calender {
+  &__setting {
+    button {
+      appearance: none;
+      border: none;
+      padding: 8px 16px;
+      white-space: nowrap;
+      color: #42b984;
+      background: #fff;
+      border: 1px solid #42b984;
+      border-radius: 40px;
+      font-size: 1.4rem;
+      margin-left: 8px;
+      &.active {
+        appearance: none;
+        border: none;
+        padding: 8px 16px;
+        white-space: nowrap;
+        color: #fff;
+        background: #42b984;
+        border: 1px solid #42b984;
+        border-radius: 40px;
+        font-size: 1.4rem;
+        margin-left: 8px;
+      }
+    }
+  }
   &__heading {
     color: $mint;
     font-weight: bold;

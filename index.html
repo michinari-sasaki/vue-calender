@@ -13,57 +13,48 @@
     <div id="app">
       <header class="header">
         <div class="inner header__inner">
-          <h1 class="header__title">ゴミの日アプリ</h1>
+          <h1 class="header__title">ゴミの日カレンダー</h1>
         </div>
       </header>
       <div class="main">
         <section class="calender">
           <div class="inner">
-            <h2 class="heading">燃えるゴミの日は毎週：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="garbageDay(index+1,'burn')">{{item}}曜日</button>
-            </template>
-            <br />
-            <h2 class="heading">燃えるゴミの日は隔週【1・3回目】：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="everyWeek(index+1,'even','burn')">{{item}}曜日</button>
-            </template>
-            <br />
-            <h2 class="heading">燃えるゴミの日は隔週【2・4回目】：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="everyWeek(index+1,'odd','burn')">{{item}}曜日</button>
-            </template>
-            <br />
-            <br />
-            <h2 class="heading">燃えないゴミの日は毎週：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="garbageDay(index+1,'nonBurn')">{{item}}曜日</button>
-            </template>
-            <br />
-            <h2 class="heading">燃えないゴミの日は隔週【1・3回目】：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="everyWeek(index+1,'even','nonBurn')">{{item}}曜日</button>
-            </template>
-            <br />
-            <h2 class="heading">燃えないゴミの日は隔週【2・4回目】：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="everyWeek(index+1,'odd','nonBurn')">{{item}}曜日</button>
-            </template>
-            <br />
-            <br />
-            <h2 class="heading">資源ゴミの日は隔週【1・3回目】：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="everyWeek(index+1,'even','resource')">{{item}}曜日</button>
-            </template>
-            <br />
-            <h2 class="heading">資源ゴミの日は隔週【2・4回目】：</h2>
-            <template v-for="item,index in this.weekdaysArray" :key="index">
-              <button v-on:click="everyWeek(index+1,'odd','resource')">{{item}}曜日</button>
-            </template>
-            <br />
-            <br />
-            <button v-on:click="saveData()">保存</button>
-            <button v-on:click="clearData()">削除</button>
+            <div class="calender__setting">
+              <h2 class="heading">可燃ゴミ収集日</h2>
+              <select v-model="selectedBurn">
+                <option v-for="item in weekTypeList" :value="item.type">{{item.val}}</option>
+              </select>
+              <!-- 変更中 -->
+              <template v-for="item,index in this.weekdaysArray" :key="index">
+                <button v-on:click="everyWeek(index+1,selectedBurn,'burn',this.isActive[index].on);selectedButton('burn',index)" v-bind:class="{active:this.isActive[index].on}">{{item}}曜日</button>
+              </template>
+              <!--
+              <template v-for="item,index in this.weekdaysArray" :key="index">
+                <button v-on:click="everyWeek(index+1,selectedBurn,'burn'); selectedButton('burn',index)" v-bind:class="{active: selected}" :class="['selected_'+index]">{{item}}曜日{{index}}</button>
+              </template> -->
+              <br />
+              <br />
+              <h2 class="heading">不燃ゴミ収集日</h2>
+              <select v-model="selectedNonBurn">
+                <option v-for="item in weekTypeList" :value="item.type">{{item.val}}</option>
+              </select>
+              <template v-for="item,index in this.weekdaysArray" :key="index">
+                <button v-on:click="everyWeek(index+1,selectedNonBurn,'nonBurn',this.isActive_2[index].on);selectedButton('burn',index)" v-bind:class="{active:this.isActive_2[index].on}">{{item}}曜日</button>
+              </template>
+              <br />
+              <br />
+              <h2 class="heading">資源ゴミ収集日</h2>
+              <select v-model="selectedResource">
+                <option v-for="item in weekTypeList" :value="item.type">{{item.val}}</option>
+              </select>
+              <template v-for="item,index in this.weekdaysArray" :key="index">
+                <button v-on:click="everyWeek(index+1,selectedResource,'resource')">{{item}}曜日</button>
+              </template>
+              <br />
+              <br />
+              <button v-on:click="saveData()">保存</button>
+              <button v-on:click="clearData()">削除</button>
+            </div>
             <h2 class="calender__heading">{{currentMonth}}月</h2>
             <ul class="calender__list">
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
@@ -87,7 +78,12 @@
       Vue.createApp({
         data: function () {
           return {
-            selected: null,
+            isActive: [{ on: false }, { on: false }, { on: false }, { on: false }, { on: false }, { on: false }, { on: false }],
+            isActive_2: [{ on: false }, { on: false }, { on: false }, { on: false }, { on: false }, { on: false }, { on: false }],
+            isActive_3: [{ on: false }, { on: false }, { on: false }, { on: false }, { on: false }, { on: false }, { on: false }],
+            selectedBurn: null,
+            selectedNonBurn: null,
+            selectedResource: null,
             startDate: null,
             currentMonth: null,
             toDate: null,
@@ -98,6 +94,11 @@
             allDays: [],
             weekdaysArray: ["月", "火", "水", "木", "金", "土"],
             dayArray: ["日", "月", "火", "水", "木", "金", "土"],
+            weekTypeList: [
+              { type: "all", val: "毎週" },
+              { type: "odd", val: "第1 | 第3" },
+              { type: "even", val: "第2 | 第4" },
+            ],
           };
         },
         methods: {
@@ -130,20 +131,12 @@
               } else {
                 this.toDay = false;
               }
-              this.allDays.push({ month: month, date: i, day: oneDay, today: this.toDay, detail: null });
+              this.allDays.push({ month: month, date: i, day: oneDay, today: this.toDay, detail: null, isActive: false });
             }
             this.blankDays = this.allDays[0].day;
           },
           //毎週のゴミの日指定
-          garbageDay: function (index, garbageType) {
-            for (let i = 0; i <= this.allDays.length - 1; i++) {
-              if (this.allDays[i].day == index) {
-                this.allDays[i].detail = garbageType;
-              }
-            }
-          },
-          //隔週指定
-          everyWeek: function (index, oddEven, garbageType) {
+          everyWeek: function (index, oddEven, garbageType, isActive) {
             //引数で指定された曜日の日付をforで配列に格納する
             let everyWeek = [];
             for (let i = 0; i <= this.allDays.length - 1; i++) {
@@ -151,20 +144,32 @@
                 everyWeek.push(this.allDays[i].date);
               }
             }
-            //奇数日（1,3隔週）偶数日（2,4隔週）で配列から奇数or偶数番目を削除
-            if (oddEven == "odd") {
+            //毎週以外、奇数日（1,3隔週）偶数日（2,4隔週）なら配列から奇数or偶数番目を削除
+            if (oddEven == "even") {
               everyWeek.splice(0, 1);
+              everyWeek.splice(1, 1);
+              everyWeek.splice(2);
+            } else if (oddEven == "odd") {
+              everyWeek.splice(1, 1);
+              everyWeek.splice(2);
+            } else if (oddEven == "all") {
             }
-            everyWeek.splice(1, 1);
-            everyWeek.splice(2);
-            for (let i = 0; i <= this.allDays.length - 1; i++) {
+            for (let i = 0; i <= this.allDays.length; i++) {
               if (everyWeek.indexOf(i) >= 0) {
                 this.allDays[i - 1].detail = garbageType;
+                this.allDays[i - 1].isActive = !isActive;
+                if (this.allDays[i - 1].isActive == false) {
+                  this.allDays[i - 1].detail = null;
+                }
+                //console.log(this.allDays[i - 1].isActive);
               }
             }
           },
+          selectedButton: function (type, index) {
+            console.log(type, index);
+            this.isActive[index].on = !this.isActive[index].on;
+          },
           saveData: function () {
-            console.log("hogeはっか");
             const tmp = JSON.stringify(this.allDays);
             localStorage.setItem("tmp", tmp);
           },
