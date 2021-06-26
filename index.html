@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="../assets/css/common.css" />
-    <link rel="stylesheet" href="../assets/css/reset.css" />
-    <link rel="stylesheet" href="../manifest.json" />
+    <link rel="stylesheet" href="../vue-calender/assets/css/common.css" />
+    <link rel="stylesheet" href="../vue-calender/assets/css/reset.css" />
+    <!-- <link rel="stylesheet" href="../vue-calender/manifest.json" /> -->
     <title>カレンダー</title>
   </head>
   <body>
@@ -274,16 +274,16 @@
     </div>
     <script>
       // service workerの登録関係
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("service_worker.js")
-          .then(function (registration) {
-            console.log("ServiceWorker registration successful with scope: ", registration.scope);
-          })
-          .catch(function (err) {
-            console.log("ServiceWorker registration failed: ", err);
-          });
-      }
+      // if ("serviceWorker" in navigator) {
+      //   navigator.serviceWorker
+      //     .register("service_worker.js")
+      //     .then(function (registration) {
+      //       console.log("ServiceWorker registration successful with scope: ", registration.scope);
+      //     })
+      //     .catch(function (err) {
+      //       console.log("ServiceWorker registration failed: ", err);
+      //     });
+      // }
       //Vueの設定
       Vue.createApp({
         data: function () {
