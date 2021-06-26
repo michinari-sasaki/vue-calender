@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="../vue-calender/assets/css/common.css" />
-    <link rel="stylesheet" href="../vue-calender/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
     <!-- <link rel="stylesheet" href="../vue-calender/manifest.json" /> -->
     <title>カレンダー</title>
   </head>
@@ -431,8 +431,8 @@
         },
         mounted: function () {
           //今年と今月を取得してデフォルト表示
-          this.dataLoad();
-          this.default();
+          // this.dataLoad();
+          // this.default();
           this.calender();
         },
       }).mount("#app");
