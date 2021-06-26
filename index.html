@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="ゴミの日カレンダー" />
@@ -232,7 +232,12 @@
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item,index in this.allDays" :key="index">
-                <p class="date">{{item.date}}</p>
+                <template v-if="item.year==this.specifiedYear&&item.month==this.thisMonth&&item.date==this.toDay">
+                  <p class="date today"><span>{{item.date}}</span></p>
+                </template>
+                <template v-else>
+                  <p class="date">{{item.date}}</p>
+                </template>
               </li>
             </ul>
           </div>
