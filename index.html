@@ -264,7 +264,21 @@
             resourceFilter: null,
           };
         },
-        watch: {},
+        watch: {
+          //指定月の設定
+          specifiedMonth: function () {
+            // this.allDays = [];
+            // this.calender();
+            // this.filter();
+          },
+          setting: function () {
+            if (this.setting == true) {
+              this.settingText = "設定を閉じる";
+            } else {
+              this.settingText = "設定を開く";
+            }
+          },
+        },
         methods: {
           calender: function () {
             //月初日、月末日を取得
