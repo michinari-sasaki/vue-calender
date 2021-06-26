@@ -5,27 +5,437 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="../vue-calender/assets/css/common.css" />
-    <link rel="stylesheet" href="../vue-calender/assets/css/reset.css" />
+    <link rel="stylesheet" href="../assets/css/common.css" />
+    <link rel="stylesheet" href="../assets/css/reset.css" />
     <!-- <link rel="stylesheet" href="../vue-calender/manifest.json" /> -->
     <title>カレンダー</title>
   </head>
   <body>
     <div id="app">
-      <button v-on:click="setting=!setting">{{this.setting}}</button>
-      <footer class="footer">{{this.settingText}}</footer>
+      <header class="header">
+        <div class="inner header__inner">
+          <h1 class="header__title">ゴミの日カレンダー</h1>
+          <button class="header__button" v-on:click="this.setting= !this.setting">{{settingText}}</button>
+        </div>
+      </header>
+      <div class="main">
+        <section v-show="setting" class="setting">
+          <div class="inner">
+            <!-- 可燃ゴミ -->
+            <ul>
+              <li>可燃ゴミ収集日</li>
+              <li>
+                <dl>
+                  <dt>収集日</dt>
+                  <dd>
+                    <label for="a1">第1</label>
+                    <input type="checkbox" id="a1" value="1" v-model="this.checkedWhatDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="a2">第2</label>
+                    <input type="checkbox" id="a2" value="2" v-model="this.checkedWhatDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="a3">第3</label>
+                    <input type="checkbox" id="a3" value="3" v-model="this.checkedWhatDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="a4">第4</label>
+                    <input type="checkbox" id="a4" value="4" v-model="this.checkedWhatDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="a5">第5</label>
+                    <input type="checkbox" id="a5" value="5" v-model="this.checkedWhatDaysA" />
+                  </dd>
+                </dl>
+              </li>
+              <li>
+                <dl>
+                  <dt>曜日</dt>
+                  <dd>
+                    <label for="b0">日</label>
+                    <input type="checkbox" id="b0" value="0" v-model="this.checkedDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="b1">月</label>
+                    <input type="checkbox" id="b1" value="1" v-model="this.checkedDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="b2">火</label>
+                    <input type="checkbox" id="b2" value="2" v-model="this.checkedDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="b3">水</label>
+                    <input type="checkbox" id="b3" value="3" v-model="this.checkedDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="b4">木</label>
+                    <input type="checkbox" id="b4" value="4" v-model="this.checkedDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="b5">金</label>
+                    <input type="checkbox" id="b5" value="5" v-model="this.checkedDaysA" />
+                  </dd>
+                  <dd>
+                    <label for="b6">土</label>
+                    <input type="checkbox" id="b6" value="6" v-model="this.checkedDaysA" />
+                  </dd>
+                </dl>
+              </li>
+            </ul>
+            <!-- 不燃ゴミ -->
+            <ul>
+              <li>不燃ゴミ収集日</li>
+              <li>
+                <dl>
+                  <dt>収集日</dt>
+                  <dd>
+                    <label for="c1">第1</label>
+                    <input type="checkbox" id="c1" value="1" v-model="this.checkedWhatDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="c2">第2</label>
+                    <input type="checkbox" id="c2" value="2" v-model="this.checkedWhatDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="c3">第3</label>
+                    <input type="checkbox" id="c3" value="3" v-model="this.checkedWhatDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="c4">第4</label>
+                    <input type="checkbox" id="c4" value="4" v-model="this.checkedWhatDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="c5">第5</label>
+                    <input type="checkbox" id="c5" value="5" v-model="this.checkedWhatDaysB" />
+                  </dd>
+                </dl>
+              </li>
+              <li>
+                <dl>
+                  <dt>曜日</dt>
+                  <dd>
+                    <label for="d0">日</label>
+                    <input type="checkbox" id="d0" value="0" v-model="this.checkedDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="d1">月</label>
+                    <input type="checkbox" id="d1" value="1" v-model="this.checkedDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="d2">火</label>
+                    <input type="checkbox" id="d2" value="2" v-model="this.checkedDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="d3">水</label>
+                    <input type="checkbox" id="d3" value="3" v-model="this.checkedDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="d4">木</label>
+                    <input type="checkbox" id="d4" value="4" v-model="this.checkedDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="d5">金</label>
+                    <input type="checkbox" id="d5" value="5" v-model="this.checkedDaysB" />
+                  </dd>
+                  <dd>
+                    <label for="d6">土</label>
+                    <input type="checkbox" id="d6" value="6" v-model="this.checkedDaysB" />
+                  </dd>
+                </dl>
+              </li>
+            </ul>
+            <!-- 資源ゴミ -->
+            <ul>
+              <li>資源ゴミ収集日</li>
+              <li>
+                <dl>
+                  <dt>収集日</dt>
+                  <dd>
+                    <label for="e1">第1</label>
+                    <input type="checkbox" id="e1" value="1" v-model="this.checkedWhatDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="e2">第2</label>
+                    <input type="checkbox" id="e2" value="2" v-model="this.checkedWhatDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="e3">第3</label>
+                    <input type="checkbox" id="e3" value="3" v-model="this.checkedWhatDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="e4">第4</label>
+                    <input type="checkbox" id="e4" value="4" v-model="this.checkedWhatDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="e5">第5</label>
+                    <input type="checkbox" id="e5" value="5" v-model="this.checkedWhatDaysC" />
+                  </dd>
+                </dl>
+              </li>
+              <li>
+                <dl>
+                  <dt>曜日</dt>
+                  <dd>
+                    <label for="f0">日</label>
+                    <input type="checkbox" id="f0" value="0" v-model="this.checkedDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="f1">月</label>
+                    <input type="checkbox" id="f1" value="1" v-model="this.checkedDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="f2">火</label>
+                    <input type="checkbox" id="f2" value="2" v-model="this.checkedDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="f3">水</label>
+                    <input type="checkbox" id="f3" value="3" v-model="this.checkedDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="f4">木</label>
+                    <input type="checkbox" id="f4" value="4" v-model="this.checkedDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="f5">金</label>
+                    <input type="checkbox" id="f5" value="5" v-model="this.checkedDaysC" />
+                  </dd>
+                  <dd>
+                    <label for="f6">土</label>
+                    <input type="checkbox" id="f6" value="6" v-model="this.checkedDaysC" />
+                  </dd>
+                </dl>
+              </li>
+            </ul>
+          </div>
+          <div class="save">
+            <div class="inner">
+              <button v-on:click="this.dataSave()">全ての設定を保存</button>
+              <button v-on:click="this.dataDelete()" class="delete">全ての設定を削除</button>
+            </div>
+          </div>
+        </section>
+        <section class="calender">
+          <div class="inner">
+            <div class="calender__top">
+              <h2 class="calender__heading">{{this.thisYear}}年 {{this.specifiedMonth}}月</h2>
+              <div class="calender__setting">
+                <button v-on:click="this.decrease">前月</button>&nbsp;
+                <button v-on:click="this.increase">次月</button>
+              </div>
+            </div>
+            <ul class="calender__list">
+              <li v-for="item in this.dayArray" class="week">{{item}}</li>
+              <li v-for="item in this.startDate">&nbsp;</li>
+              <li v-for="item,index in this.allDays" :key="index">
+                <!-- console.log(this.specifiedYear + "/" + this.thisMonth + "/" + this.toDay);                 -->
+                <template v-if="item.year==this.specifiedYear&&item.month==this.thisMonth&&item.date==this.toDay">
+                  <p class="date today"><span>{{item.date}}</span></p>
+                </template>
+                <template v-else>
+                  <p class="date">{{item.date}}</p>
+                </template>
+                <!-- 可燃ごみ -->
+                <template v-if="this.combustibleFilter">
+                  <template v-for="days in this.combustibleFilter.days">
+                    <template v-if="item.day == days">
+                      <template v-for="whatDays in this.combustibleFilter.whatDays">
+                        <p class="type combustible" v-if="item.whatDay == whatDays">可燃</p>
+                      </template>
+                    </template>
+                  </template>
+                </template>
+                <!-- 不燃ごみ -->
+                <template v-if="this.nonBurnableFilter">
+                  <template v-for="days in this.nonBurnableFilter.days">
+                    <template v-if="item.day == days">
+                      <template v-for="whatDays in this.nonBurnableFilter.whatDays">
+                        <p class="type nonBurnable" v-if="item.whatDay == whatDays">不燃</p>
+                      </template>
+                    </template>
+                  </template>
+                </template>
+                <!-- 資源ごみ -->
+                <template v-if="this.resourceFilter">
+                  <template v-for="days in this.resourceFilter.days">
+                    <template v-if="item.day == days">
+                      <template v-for="whatDays in this.resourceFilter.whatDays">
+                        <p class="type resource" v-if="item.whatDay == whatDays">資源</p>
+                      </template>
+                    </template>
+                  </template>
+                </template>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <footer class="footer">ゴミの日アプリ</footer>
     </div>
     <script>
+      // service workerの登録関係
+      // if ("serviceWorker" in navigator) {
+      //   navigator.serviceWorker
+      //     .register("service_worker.js")
+      //     .then(function (registration) {
+      //       console.log("ServiceWorker registration successful with scope: ", registration.scope);
+      //     })
+      //     .catch(function (err) {
+      //       console.log("ServiceWorker registration failed: ", err);
+      //     });
+      // }
+      //Vueの設定
       Vue.createApp({
         data: function () {
           return {
             settingText: "設定を開く",
             setting: false,
+            thisYear: null,
+            startDate: null,
+            lastDate: null,
+            specifiedMonth: null,
+            specifiedYear: null,
+            toDay: null,
+            thisMonth: null,
+            dayArray: ["日", "月", "火", "水", "木", "金", "土"],
+            allDays: [],
+            thisDay: null,
+            checkedDaysA: [],
+            checkedWhatDaysA: [],
+            checkedDaysB: [],
+            checkedWhatDaysB: [],
+            checkedDaysC: [],
+            checkedWhatDaysC: [],
+            combustibleFilter: null,
+            nonBurnableFilter: null,
+            resourceFilter: null,
           };
         },
-        watch: {},
-        methods: {},
-        mounted: function () {},
+        watch: {
+          //指定月の設定
+          specifiedMonth: function () {
+            this.allDays = [];
+            this.calender();
+            this.filter();
+          },
+          setting: function () {
+            console.log("ほげ");
+            if (this.setting == true) {
+              this.settingText = "設定を閉じる";
+            } else {
+              this.settingText = "設定を開く";
+            }
+          },
+        },
+        methods: {
+          default: function () {
+            //今年と今月を取得してデフォルト表示
+            this.thisYear = new Date().getFullYear();
+            this.specifiedYear = new Date().getFullYear();
+            this.toDay = new Date().getDate();
+            this.thisMonth = new Date().getMonth() + 1;
+            this.specifiedMonth = this.thisMonth;
+          },
+          calender: function () {
+            //月初日、月末日を取得
+            this.startDate = new Date(this.thisYear, this.specifiedMonth - 1, 1).getDay();
+            this.lastDate = new Date(this.thisYear, this.specifiedMonth, 0).getDate();
+            let whatDay = 0;
+            for (let i = 1; i <= this.lastDate; i++) {
+              this.thisDay = new Date(this.thisYear, this.specifiedMonth - 1, i);
+              this.thisDay = this.thisDay.getDay();
+              //最初の1日の曜日から何階目の曜日かカウントする
+              if (this.thisDay == this.startDate) {
+                whatDay += 1;
+              }
+              //指定月の日付を全てオブジェクト化
+              this.allDays.push({
+                year: this.specifiedYear,
+                month: this.specifiedMonth,
+                date: i,
+                day: this.thisDay,
+                whatDay: whatDay,
+              });
+            }
+          },
+          increase: function () {
+            //月送りプラス
+            if (this.specifiedMonth < 13) {
+              this.specifiedMonth++;
+              if (this.specifiedMonth == 13) {
+                this.thisYear += 1;
+                this.specifiedMonth = 1;
+              }
+            }
+          },
+          decrease: function () {
+            //月送りマイナス
+            if (this.specifiedMonth > 0) {
+              this.specifiedMonth--;
+              if (this.specifiedMonth == 0) {
+                this.thisYear -= 1;
+                this.specifiedMonth = 12;
+              }
+            }
+          },
+          filter: function (garbageType, whatDays, days) {
+            if (garbageType == "combustible") {
+              this.combustibleFilter = {
+                garbageType: "combustible",
+                whatDays: whatDays,
+                days: days,
+              };
+            }
+            if (garbageType == "nonBurnable") {
+              this.nonBurnableFilter = {
+                garbageType: "nonBurnable",
+                whatDays: whatDays,
+                days: days,
+              };
+            }
+            if (garbageType == "resource") {
+              this.resourceFilter = {
+                garbageType: "resource",
+                whatDays: whatDays,
+                days: days,
+              };
+            }
+          },
+          dataLoad: function () {
+            if (localStorage.hasOwnProperty("combustible")) {
+              this.combustibleFilter = JSON.parse(localStorage.getItem("combustible"));
+            }
+            if (localStorage.hasOwnProperty("nonBurnable")) {
+              this.nonBurnableFilter = JSON.parse(localStorage.getItem("nonBurnable"));
+            }
+            if (localStorage.hasOwnProperty("resource")) {
+              this.resourceFilter = JSON.parse(localStorage.getItem("resource"));
+            }
+          },
+          dataSave: function () {
+            this.filter("combustible", this.checkedWhatDaysA, this.checkedDaysA);
+            this.filter("nonBurnable", this.checkedWhatDaysB, this.checkedDaysB);
+            this.filter("resource", this.checkedWhatDaysC, this.checkedDaysC);
+            const combustible = JSON.stringify(this.combustibleFilter);
+            localStorage.setItem("combustible", combustible);
+            const nonBurnable = JSON.stringify(this.nonBurnableFilter);
+            localStorage.setItem("nonBurnable", nonBurnable);
+            const resource = JSON.stringify(this.resourceFilter);
+            localStorage.setItem("resource", resource);
+            this.setting = false;
+          },
+          dataDelete: function () {
+            localStorage.clear();
+            location.reload();
+          },
+        },
+        mounted: function () {
+          //今年と今月を取得してデフォルト表示
+          this.dataLoad();
+          this.default();
+          this.calender();
+          alert(this.thisYear);
+        },
       }).mount("#app");
     </script>
   </body>
