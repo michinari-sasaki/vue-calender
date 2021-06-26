@@ -228,42 +228,11 @@
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item,index in this.allDays" :key="index">
-                <!-- console.log(this.specifiedYear + "/" + this.thisMonth + "/" + this.toDay);                 -->
                 <template v-if="item.year==this.specifiedYear&&item.month==this.thisMonth&&item.date==this.toDay">
                   <p class="date today"><span>{{item.date}}</span></p>
                 </template>
                 <template v-else>
                   <p class="date">{{item.date}}</p>
-                </template>
-                <!-- 可燃ごみ -->
-                <template v-if="this.combustibleFilter">
-                  <template v-for="days in this.combustibleFilter.days">
-                    <template v-if="item.day == days">
-                      <template v-for="whatDays in this.combustibleFilter.whatDays">
-                        <p class="type combustible" v-if="item.whatDay == whatDays">可燃</p>
-                      </template>
-                    </template>
-                  </template>
-                </template>
-                <!-- 不燃ごみ -->
-                <template v-if="this.nonBurnableFilter">
-                  <template v-for="days in this.nonBurnableFilter.days">
-                    <template v-if="item.day == days">
-                      <template v-for="whatDays in this.nonBurnableFilter.whatDays">
-                        <p class="type nonBurnable" v-if="item.whatDay == whatDays">不燃</p>
-                      </template>
-                    </template>
-                  </template>
-                </template>
-                <!-- 資源ごみ -->
-                <template v-if="this.resourceFilter">
-                  <template v-for="days in this.resourceFilter.days">
-                    <template v-if="item.day == days">
-                      <template v-for="whatDays in this.resourceFilter.whatDays">
-                        <p class="type resource" v-if="item.whatDay == whatDays">資源</p>
-                      </template>
-                    </template>
-                  </template>
                 </template>
               </li>
             </ul>
@@ -311,22 +280,7 @@
             resourceFilter: null,
           };
         },
-        watch: {
-          //指定月の設定
-          specifiedMonth: function () {
-            this.allDays = [];
-            this.calender();
-            this.filter();
-          },
-          setting: function () {
-            console.log("ほげ");
-            if (this.setting == true) {
-              this.settingText = "設定を閉じる";
-            } else {
-              this.settingText = "設定を開く";
-            }
-          },
-        },
+        watch: {},
         methods: {
           default: function () {
             //今年と今月を取得してデフォルト表示
@@ -434,7 +388,6 @@
           this.dataLoad();
           this.default();
           this.calender();
-          alert(this.thisYear);
         },
       }).mount("#app");
     </script>
