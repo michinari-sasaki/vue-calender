@@ -229,7 +229,7 @@
               </div>
             </div>
             <template v-for="item in dayArray">
-              <template v-if="item =='月'"> ほげほげ </template>
+              <template v-if="item == this.tsuki"> ほげほげ </template>
               {{item}} <br />
             </template>
 
@@ -265,7 +265,7 @@
         data: function () {
           return {
             tsuki: "月",
-            number: "1",
+            number: 1,
             hoge: false,
             settingText: "設定を開く",
             setting: false,
