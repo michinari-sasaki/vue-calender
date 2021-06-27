@@ -232,7 +232,9 @@
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item,index in this.allDays" :key="index">
-                <p class="date">{{item.date}}</p>
+                <template>
+                  <p class="date">{{item.date}}</p>
+                </template>
               </li>
             </ul>
           </div>
