@@ -239,7 +239,7 @@
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item in this.allDays">
-                <template v-if="item.date == this.number"> {{item.year}}{{item.month}}{{item.date}}</template>
+                <template v-if="item.date == this.number"> {{item.month}}{{item.date}}</template>
                 <template v-else> {{item.date}} </template>
               </li>
             </ul>
