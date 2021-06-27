@@ -18,7 +18,7 @@
     <div id="app">
       <header class="header">
         <div class="inner header__inner">
-          <h1 class="header__title">ゴミの日カレンダー10</h1>
+          <h1 class="header__title">ゴミの日カレンダー9</h1>
           <button class="header__button" v-on:click="settingButton">{{settingText}}</button>
         </div>
       </header>
@@ -228,14 +228,16 @@
                 <button v-on:click="this.increase">次月</button>
               </div>
             </div>
+            <div v-if="this.hoge">ほげは{{this.hoge}}</div>
+            <div v-else>ほげですが{{this.hoge}}</div>
             <ul class="calender__list">
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item,index in this.allDays" :key="index">
-                <div v-show="this.hoge" class="date today">
+                <p v-if="item.year==this.specifiedYear&&item.month==this.thisMonth&&item.date==this.toDay" class="date today">
                   <span>{{item.date}}</span>
-                </div>
-                <!-- <div v-else class="date">{{item.date}}</div> -->
+                </p>
+                <p v-else class="date">{{item.date}}</p>
               </li>
             </ul>
           </div>
