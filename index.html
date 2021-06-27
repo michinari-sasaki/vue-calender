@@ -239,7 +239,7 @@
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item in this.allDays">
-                <template v-if="item.date == '1'"> {{item.year}}{{item.month}}{{item.date}} {{this.specifiedYear}}{{this.thisMonth}}{{ this.toDay}} </template>
+                <template v-if="item.date == '1'"> {{item.date}} はい</template>
                 <template v-else> {{item.date}} </template>
               </li>
             </ul>
@@ -264,6 +264,7 @@
       Vue.createApp({
         data: function () {
           return {
+            hoge: false,
             settingText: "設定を開く",
             setting: false,
             thisYear: null,
