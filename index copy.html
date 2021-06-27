@@ -3,19 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="ゴミの日カレンダー" />
+    <link rel="apple-touch-icon" href="images/icons/icon-152x152.png" /> -->
     <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="../assets/css/common.css" />
-    <link rel="stylesheet" href="../assets/css/reset.css" />
-    <!-- <link rel="stylesheet" href="../vue-calender/manifest.json" /> -->
+    <link rel="stylesheet" href="https://michinari-sasaki.github.io/vue-calender/assets/css/common.css" />
+    <link rel="stylesheet" href="https://michinari-sasaki.github.io/vue-calender/assets/css/reset.css" />
+    <!-- <link rel="stylesheet" href="https://michinari-sasaki.github.io/vue-calender/manifest.json" /> -->
     <title>カレンダー</title>
   </head>
   <body>
     <div id="app">
       <header class="header">
         <div class="inner header__inner">
-          <h1 class="header__title">ゴミの日カレンダー</h1>
-          <button class="header__button" v-on:click="this.setting= !this.setting">{{settingText}}</button>
+          <h1 class="header__title">ゴミの日カレンダー9</h1>
+          <button class="header__button" v-on:click="settingButton">{{settingText}}</button>
         </div>
       </header>
       <div class="main">
@@ -224,48 +228,16 @@
                 <button v-on:click="this.increase">次月</button>
               </div>
             </div>
+            <template v-for="item in dayArray">
+              <template v-if="item == '月'"> <p>{{item}}</p> </template>
+            </template>
+
+            <template v-if="this.hoge">ほげは{{this.hoge}}</template>
+            <template v-else>ほげですが{{this.hoge}}</template>
             <ul class="calender__list">
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
-              <li v-for="item,index in this.allDays" :key="index">
-                <!-- console.log(this.specifiedYear + "/" + this.thisMonth + "/" + this.toDay);                 -->
-                <template v-if="item.year==this.specifiedYear&&item.month==this.thisMonth&&item.date==this.toDay">
-                  <p class="date today"><span>{{item.date}}</span></p>
-                </template>
-                <template v-else>
-                  <p class="date">{{item.date}}</p>
-                </template>
-                <!-- 可燃ごみ -->
-                <template v-if="this.combustibleFilter">
-                  <template v-for="days in this.combustibleFilter.days">
-                    <template v-if="item.day == days">
-                      <template v-for="whatDays in this.combustibleFilter.whatDays">
-                        <p class="type combustible" v-if="item.whatDay == whatDays">可燃</p>
-                      </template>
-                    </template>
-                  </template>
-                </template>
-                <!-- 不燃ごみ -->
-                <template v-if="this.nonBurnableFilter">
-                  <template v-for="days in this.nonBurnableFilter.days">
-                    <template v-if="item.day == days">
-                      <template v-for="whatDays in this.nonBurnableFilter.whatDays">
-                        <p class="type nonBurnable" v-if="item.whatDay == whatDays">不燃</p>
-                      </template>
-                    </template>
-                  </template>
-                </template>
-                <!-- 資源ごみ -->
-                <template v-if="this.resourceFilter">
-                  <template v-for="days in this.resourceFilter.days">
-                    <template v-if="item.day == days">
-                      <template v-for="whatDays in this.resourceFilter.whatDays">
-                        <p class="type resource" v-if="item.whatDay == whatDays">資源</p>
-                      </template>
-                    </template>
-                  </template>
-                </template>
-              </li>
+              <li v-for="item in this.allDays">{{item.date}}</li>
             </ul>
           </div>
         </section>
@@ -273,7 +245,7 @@
       <footer class="footer">ゴミの日アプリ</footer>
     </div>
     <script>
-      // service workerの登録関係
+      //service workerの登録関係
       // if ("serviceWorker" in navigator) {
       //   navigator.serviceWorker
       //     .register("service_worker.js")
@@ -288,6 +260,9 @@
       Vue.createApp({
         data: function () {
           return {
+            tsuki: "月",
+            number: "1",
+            hoge: false,
             settingText: "設定を開く",
             setting: false,
             thisYear: null,
@@ -311,15 +286,15 @@
             resourceFilter: null,
           };
         },
+        computed: {},
         watch: {
           //指定月の設定
           specifiedMonth: function () {
-            this.allDays = [];
-            this.calender();
-            this.filter();
+            // this.allDays = [];
+            // this.calender();
+            // this.filter();
           },
           setting: function () {
-            console.log("ほげ");
             if (this.setting == true) {
               this.settingText = "設定を閉じる";
             } else {
@@ -328,16 +303,13 @@
           },
         },
         methods: {
-          default: function () {
-            //今年と今月を取得してデフォルト表示
+          calender: function () {
+            //月初日、月末日を取得
             this.thisYear = new Date().getFullYear();
             this.specifiedYear = new Date().getFullYear();
             this.toDay = new Date().getDate();
             this.thisMonth = new Date().getMonth() + 1;
             this.specifiedMonth = this.thisMonth;
-          },
-          calender: function () {
-            //月初日、月末日を取得
             this.startDate = new Date(this.thisYear, this.specifiedMonth - 1, 1).getDay();
             this.lastDate = new Date(this.thisYear, this.specifiedMonth, 0).getDate();
             let whatDay = 0;
@@ -378,61 +350,13 @@
               }
             }
           },
-          filter: function (garbageType, whatDays, days) {
-            if (garbageType == "combustible") {
-              this.combustibleFilter = {
-                garbageType: "combustible",
-                whatDays: whatDays,
-                days: days,
-              };
-            }
-            if (garbageType == "nonBurnable") {
-              this.nonBurnableFilter = {
-                garbageType: "nonBurnable",
-                whatDays: whatDays,
-                days: days,
-              };
-            }
-            if (garbageType == "resource") {
-              this.resourceFilter = {
-                garbageType: "resource",
-                whatDays: whatDays,
-                days: days,
-              };
-            }
-          },
-          dataLoad: function () {
-            if (localStorage.hasOwnProperty("combustible")) {
-              this.combustibleFilter = JSON.parse(localStorage.getItem("combustible"));
-            }
-            if (localStorage.hasOwnProperty("nonBurnable")) {
-              this.nonBurnableFilter = JSON.parse(localStorage.getItem("nonBurnable"));
-            }
-            if (localStorage.hasOwnProperty("resource")) {
-              this.resourceFilter = JSON.parse(localStorage.getItem("resource"));
-            }
-          },
-          dataSave: function () {
-            this.filter("combustible", this.checkedWhatDaysA, this.checkedDaysA);
-            this.filter("nonBurnable", this.checkedWhatDaysB, this.checkedDaysB);
-            this.filter("resource", this.checkedWhatDaysC, this.checkedDaysC);
-            const combustible = JSON.stringify(this.combustibleFilter);
-            localStorage.setItem("combustible", combustible);
-            const nonBurnable = JSON.stringify(this.nonBurnableFilter);
-            localStorage.setItem("nonBurnable", nonBurnable);
-            const resource = JSON.stringify(this.resourceFilter);
-            localStorage.setItem("resource", resource);
-            this.setting = false;
-          },
-          dataDelete: function () {
-            localStorage.clear();
-            location.reload();
+          settingButton: function () {
+            this.setting = !this.setting;
           },
         },
         mounted: function () {
           //今年と今月を取得してデフォルト表示
-          this.dataLoad();
-          this.default();
+          //this.dataLoad();
           this.calender();
         },
       }).mount("#app");
