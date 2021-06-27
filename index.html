@@ -229,7 +229,7 @@
               </div>
             </div>
             <template v-for="item in dayArray">
-              <template v-if="item =='月'"> 月曜日だだよ </template>
+              <template v-if="item == this.tsuki"> 月曜日だだよ </template>
               {{item}} <br />
             </template>
 
@@ -264,6 +264,7 @@
       Vue.createApp({
         data: function () {
           return {
+            tsuki: "月",
             number: "1",
             hoge: false,
             settingText: "設定を開く",
