@@ -229,7 +229,7 @@
               </div>
             </div>
             <template v-for="item in dayArray">
-              <template v-if="item == this.tsuki"> 月曜日だだよ </template>
+              <template v-if="item =='月'"> {{this.tsuki}} </template>
               {{item}} <br />
             </template>
 
