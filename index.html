@@ -228,6 +228,11 @@
                 <button v-on:click="this.increase">次月</button>
               </div>
             </div>
+            <template v-for="item in dayArray">
+              <template v-if="item =='月'"> 月曜日だだよ </template>
+              {{item}} <br />
+            </template>
+
             <template v-if="this.hoge">ほげは{{this.hoge}}</template>
             <template v-else>ほげですが{{this.hoge}}</template>
             <ul class="calender__list">
@@ -261,7 +266,6 @@
       Vue.createApp({
         data: function () {
           return {
-            hoge: false,
             settingText: "設定を開く",
             setting: false,
             thisYear: null,
