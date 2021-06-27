@@ -234,7 +234,9 @@
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item in this.allDays">
-                <p v-show="this.hoge == false" class="date">うんち</p>
+                <template v-if="this.hoge == false" class="date">
+                  <p>うんちち</p>
+                </template>
                 <p class="date">{{item.date}}</p>
               </li>
             </ul>
