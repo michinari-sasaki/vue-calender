@@ -228,16 +228,13 @@
                 <button v-on:click="this.increase">次月</button>
               </div>
             </div>
-            <div v-if="this.hoge">ほげは{{this.hoge}}</div>
-            <div v-else>ほげですが{{this.hoge}}</div>
+            <template v-if="this.hoge">ほげは{{this.hoge}}</template>
+            <template v-else>ほげですが{{this.hoge}}</template>
             <ul class="calender__list">
               <li v-for="item in this.dayArray" class="week">{{item}}</li>
               <li v-for="item in this.startDate">&nbsp;</li>
               <li v-for="item,index in this.allDays" :key="index">
-                <p v-if="this.hoge" class="date today">
-                  <span>{{item.date}}{{this.hoge}}</span>
-                </p>
-                <p v-else class="date">{{item.date}}{{this.hoge}}</p>
+                <p class="date">{{item.date}}</p>
               </li>
             </ul>
           </div>
