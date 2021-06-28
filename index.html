@@ -3,20 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
     <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="https://michinari-sasaki.github.io/vue-calender/assets/css/common.css" />
-    <link rel="stylesheet" href="https://michinari-sasaki.github.io/vue-calender/assets/css/reset.css" />
+    <link rel="stylesheet" href="../vue-calender/assets/css/common.css" />
+    <link rel="stylesheet" href="../vue-calender/assets/css/reset.css" />
     <!-- <link rel="stylesheet" href="/assets/css/common.css" />
     <link rel="stylesheet" href="/assets/css/reset.css" /> -->
-    <!-- <link rel="stylesheet" href="../vue-calender/manifest.json" /> -->
+    <link rel="stylesheet" href="../vue-calender/manifest.json" />
     <title>カレンダー</title>
   </head>
   <body>
     <div id="app">
       <header class="header">
         <div class="inner header__inner">
-          <h1 class="header__title">ゴミの日カレンダー2</h1>
+          <h1 class="header__title">ゴミの日カレンダー</h1>
           <button class="header__button" v-on:click="this.setting= !this.setting">{{settingText}}</button>
         </div>
       </header>
@@ -217,7 +217,7 @@
             </div>
           </div>
         </section>
-        <section class="calender">
+        <section class="calender" v-show="calenderArea">
           <div class="inner">
             <div class="calender__top">
               <h2 class="calender__heading">{{this.thisYear}}年 {{this.specifiedMonth}}月</h2>
@@ -276,20 +276,21 @@
     </div>
     <script>
       // service workerの登録関係
-      // if ("serviceWorker" in navigator) {
-      //   navigator.serviceWorker
-      //     .register("service_worker.js")
-      //     .then(function (registration) {
-      //       console.log("ServiceWorker registration successful with scope: ", registration.scope);
-      //     })
-      //     .catch(function (err) {
-      //       console.log("ServiceWorker registration failed: ", err);
-      //     });
-      // }
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("service_worker.js")
+          .then(function (registration) {
+            console.log("ServiceWorker registration successful with scope: ", registration.scope);
+          })
+          .catch(function (err) {
+            console.log("ServiceWorker registration failed: ", err);
+          });
+      }
       //Vueの設定
       Vue.createApp({
         data: function () {
           return {
+            calenderArea: true,
             settingText: "設定",
             setting: false,
             thisYear: null,
@@ -324,8 +325,10 @@
             console.log("ほげ");
             if (this.setting == true) {
               this.settingText = "閉じる";
+              this.calenderArea = false;
             } else {
               this.settingText = "設定";
+              this.calenderArea = true;
             }
           },
         },

@@ -34,6 +34,7 @@ body {
 #app {
   max-width: 900px;
   margin: 0 auto;
+  min-height: 100vh;
 }
 .inner {
   padding: 24px;
@@ -78,6 +79,7 @@ body {
     justify-content: space-between;
     @include sp {
       flex-flow: column;
+      padding: 16px 0;
     }
     ul {
       width: 30%;
@@ -157,13 +159,15 @@ body {
   }
 }
 .save {
+  margin: 24px 0 40px;
   .inner {
     display: flex;
     justify-content: center;
+    padding: 0 24px;
     button {
       appearance: none;
       border: none;
-      padding: 8px 48px;
+      padding: 16px 48px;
       white-space: nowrap;
       color: #fff;
       background: #42b984;
@@ -188,7 +192,7 @@ body {
 
 .calender {
   .inner {
-    padding: 40px 0 160px;
+    padding: 40px 0 80px;
   }
   &__top {
     display: flex;
