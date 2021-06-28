@@ -17,18 +17,24 @@
       <header class="header">
         <div class="inner header__inner">
           <h1 class="header__title">ゴミの日カレンダー</h1>
-          <button class="header__button" v-on:click="this.setting= !this.setting">{{settingText}}</button>
+          <!-- <button class="header__button" v-on:click="this.setting = !this.setting">{{settingText}}</button> -->
+          <button class="header__button" v-on:click="this.setting = !this.setting">{{settingText}}</button>
         </div>
       </header>
       <div class="main">
         <section v-show="setting" class="setting">
           <div class="inner">
+            各ゴミの日を設定してください。
+            <div class="setting__tab">
+              <p class="tab_a" v-on:click="this.tabChange(1)" v-bind:class="{active: this.tabActive === 1}">可燃ゴミ</p>
+              <p class="tab_b" v-on:click="this.tabChange(2)" v-bind:class="{active: this.tabActive === 2}">不燃ゴミ</p>
+              <p class="tab_c" v-on:click="this.tabChange(3)" v-bind:class="{active: this.tabActive === 3}">資源ゴミ</p>
+            </div>
             <!-- 可燃ゴミ -->
-            <ul>
-              <li>可燃ゴミ収集日</li>
+            <ul v-if="this.tabActive === 1">
               <li>
                 <dl>
-                  <dt>収集日</dt>
+                  <dt>収集日（可燃）</dt>
                   <dd>
                     <label for="a1">第1</label>
                     <input type="checkbox" id="a1" value="1" v-model="this.checkedWhatDaysA" />
@@ -50,10 +56,8 @@
                     <input type="checkbox" id="a5" value="5" v-model="this.checkedWhatDaysA" />
                   </dd>
                 </dl>
-              </li>
-              <li>
                 <dl>
-                  <dt>曜日</dt>
+                  <dt>曜日（可燃）</dt>
                   <dd>
                     <label for="b0">日</label>
                     <input type="checkbox" id="b0" value="0" v-model="this.checkedDaysA" />
@@ -86,11 +90,10 @@
               </li>
             </ul>
             <!-- 不燃ゴミ -->
-            <ul>
-              <li>不燃ゴミ収集日</li>
+            <ul v-else-if="this.tabActive === 2">
               <li>
                 <dl>
-                  <dt>収集日</dt>
+                  <dt>収集日（不燃）</dt>
                   <dd>
                     <label for="c1">第1</label>
                     <input type="checkbox" id="c1" value="1" v-model="this.checkedWhatDaysB" />
@@ -112,10 +115,8 @@
                     <input type="checkbox" id="c5" value="5" v-model="this.checkedWhatDaysB" />
                   </dd>
                 </dl>
-              </li>
-              <li>
                 <dl>
-                  <dt>曜日</dt>
+                  <dt>曜日（不燃）</dt>
                   <dd>
                     <label for="d0">日</label>
                     <input type="checkbox" id="d0" value="0" v-model="this.checkedDaysB" />
@@ -148,11 +149,10 @@
               </li>
             </ul>
             <!-- 資源ゴミ -->
-            <ul>
-              <li>資源ゴミ収集日</li>
+            <ul v-else-if="this.tabActive === 3">
               <li>
                 <dl>
-                  <dt>収集日</dt>
+                  <dt>収集日（資源）</dt>
                   <dd>
                     <label for="e1">第1</label>
                     <input type="checkbox" id="e1" value="1" v-model="this.checkedWhatDaysC" />
@@ -174,10 +174,8 @@
                     <input type="checkbox" id="e5" value="5" v-model="this.checkedWhatDaysC" />
                   </dd>
                 </dl>
-              </li>
-              <li>
                 <dl>
-                  <dt>曜日</dt>
+                  <dt>曜日（資源）</dt>
                   <dd>
                     <label for="f0">日</label>
                     <input type="checkbox" id="f0" value="0" v-model="this.checkedDaysC" />
@@ -290,6 +288,7 @@
       Vue.createApp({
         data: function () {
           return {
+            tabActive: 1,
             calenderArea: true,
             settingText: "設定",
             setting: false,
@@ -432,6 +431,9 @@
           dataDelete: function () {
             localStorage.clear();
             location.reload();
+          },
+          tabChange: function (num) {
+            this.tabActive = num;
           },
         },
         mounted: function () {
