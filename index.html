@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="../vue-calender/assets/css/common.css" />
-    <link rel="stylesheet" href="../vue-calender/assets/css/reset.css" />
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+    <link rel="stylesheet" href="../../assets/css/reset.css" />
     <!-- <link rel="stylesheet" href="../vue-calender/manifest.json" /> -->
     <title>カレンダー</title>
   </head>
@@ -288,7 +288,7 @@
       Vue.createApp({
         data: function () {
           return {
-            settingText: "設定を開く",
+            settingText: "設定",
             setting: false,
             thisYear: null,
             startDate: null,
@@ -321,9 +321,9 @@
           setting: function () {
             console.log("ほげ");
             if (this.setting == true) {
-              this.settingText = "設定を閉じる";
+              this.settingText = "閉じる";
             } else {
-              this.settingText = "設定を開く";
+              this.settingText = "設定";
             }
           },
         },
